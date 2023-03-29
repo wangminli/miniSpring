@@ -11,7 +11,7 @@ public class ClassPathXmlApplicationContext implements BeanFactory{
         //1、获取xml里的bean内容，这时候还没有转成类
         Resource resource = new ClassPathXmlResource(fileName);
         //2、生成一个bean工厂
-        BeanFactory beanFactory = new SimpleBeanFactory();
+        SimpleBeanFactory beanFactory = new SimpleBeanFactory();
         //3、定义一个阅读器，【注意】：这里的bean工厂被赋值到了reader的成员变量里面了，是同一个对象了（从toString就能看出来）
         XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
         //4、阅读器阅读resource中的资源，对上面beanFactory对象进行赋值
@@ -25,7 +25,11 @@ public class ClassPathXmlApplicationContext implements BeanFactory{
         return this.beanFactory.getBean(beanName);
     }
     @Override
-    public void registerBeanDefinition(BeanDefinition beanDefinition) {
-       this.beanFactory.registerBeanDefinition(beanDefinition);
+    public Boolean containsBean(String name) {
+        return this.beanFactory.containsBean(name);
+    }
+    @Override
+    public void registerBean(String beanName, Object obj) {
+        this.beanFactory.registerBean(beanName, obj);
     }
 }
